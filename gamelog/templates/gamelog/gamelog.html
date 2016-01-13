@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    {%  include 'gamelog/head.html' %}
+	
+	<body>
+		<div id="wrapper">
+			{% include 'gamelog/header.html' %}
+			<div id="bodybox">
+				<div id="gamelogbox">
+
+                    {% if gamelog_list %}
+                        <ol>
+                        {% for game in gamelog_list %}
+                            <li><a href="{% url 'gamelog:game' game.id %}">{{ game.format }} at {{ game.location }}</a></li>
+                        {% endfor %}
+                        </ol>
+                    {% endif %}
+                    <form action="{% url 'gamelog:add_game' %}" method="post">
+                        {% csrf_token %}
+                        <br>
+                        Format:<br/>
+                        <select name="format">
+                        {% if Formats %}
+                            {% for format in Formats %}
+                                <option value="{{ format.id }}">{{ format.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                        </select><br><br>
+
+                        Location:<br/>
+                        <select name="location">
+                        {% if Locations %}
+                            {% for location in Locations %}
+                                <option value="{{ location.id }}">{{ location.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                        </select>
+                        <br><br>
+
+                        Player:<br/>
+                        <select name="ddlPlayer" id="ddlPlayer">
+                        <option value="-1">--Select Player--</option>
+                        {% if Players %}
+                            {% for player in Players %}
+                                <option value="{{ player.id }}">{{ player.first_name }} {{ player.last_name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                        <option value="0">--ADD NEW PLAYER--</option>
+                        </select>
+
+                        <div id="addPlayerBox" style="display: none;">
+                            First Name:<input type="text" name="player" id="player">
+                        </div>
+
+                        <input type="button" value="Add" id="addPlayer">
+                        <div id="playerbox">
+                            <table style="width:100%" align="center" id="players">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th>Deck</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <br><br>
+
+                        <a href="home.html"><input type="submit" value="Submit"></a>
+                        <br>
+                    </div>
+                </form>
+				
+			</div>
+			<div id="footer">
+			</div>
+		</div>
+	
+	</body>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#ddlPlayer").change(function() {
+                if ($(this).val() == 0){
+                    $("#addPlayerBox").show();
+                } else {
+                    $("#addPlayerBox").hide();
+
+                    //show deck picker
+                    
+                }
+            });
+
+            $("#addPlayer").click(function() {
+                var selectedText = $("#ddlPlayer :selected").text();
+                var selectedVal = $("#ddlPlayer").val();
+                $("#players tbody").append("<tr><td>" + selectedText + "</td></tr>");
+            })
+
+
+        });
+    </script>
+
+</html>
