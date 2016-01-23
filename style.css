@@ -99,6 +99,11 @@ td {
 	width: 66%;
 }
 
+#aterix {
+	width: 66%;
+	min-height: 100px;
+}
+
 
 
 #footer {
