@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	
+	var playerArray = [];
 	$("#addPlayer").click(function() {
 		var playerName = $("#player").val();
 		var commanderName = $("#commander").val();
@@ -13,18 +14,16 @@ $(document).ready(function(){
 	});
 
 	$('#gameStart').click(function(){
-		var myTableArray = [];
+		$("table#players tr").each(function() {
+   		var arrayOfThisRow = [];
+    	var tableData = $(this).find('td');
+    	if (tableData.length > 0) {
+        	tableData.each(function() { arrayOfThisRow.push($(this).text()); });
+        	playerArray.push(arrayOfThisRow);
+    		}	
+		});
 
-$("table#players tr").each(function() {
-    var arrayOfThisRow = [];
-    var tableData = $(this).find('td');
-    if (tableData.length > 0) {
-        tableData.each(function() { arrayOfThisRow.push($(this).text()); });
-        myTableArray.push(arrayOfThisRow);
-    }
-});
-
-alert(myTableArray);
+alert(playerArray);
 		window.location.href = "gametracker.html";
 	});
 });
