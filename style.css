@@ -14,7 +14,7 @@ td {
 #wrapper {
 	background-image: url("images/backgroundlandscape.jpg");
 	background-repeat: no-repeat;
-	background-size: 100%;
+	background-size: cover;
 }
 
 #header {
@@ -22,6 +22,10 @@ td {
 	height: 7vh;
 	background-color:;
 	margin: auto;
+	position: fixed;
+  	z-index: 1;
+  	top:0;
+  	overflow:hidden;
 }
 
 .nav {
@@ -89,6 +93,10 @@ td {
 	width: 66%;
 	margin: auto;
 	text-align: center;
+}
+
+#deck {
+	width: 66%;
 }
 
 
