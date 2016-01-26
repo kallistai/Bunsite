@@ -29,34 +29,7 @@ class Deck(models.Model):
     name = models.CharField(max_length=50)
     format = models.ForeignKey(Format)
     web_link = models.CharField(max_length=100)
-    player = models.ForeignKey(Player, null=True
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               )
+    player = models.ForeignKey(Player, null=True)
     
     def __str__(self):
         return self.format.name + ": " + self.name
@@ -70,11 +43,12 @@ class Location(models.Model):
    
 
 class Game(models.Model):
-    players = models.ManyToManyField(Player)
+    players = models.ManyToManyField(Player, related_name='players')
     location = models.ForeignKey(Location)
     format = models.ForeignKey(Format)
     created_date = models.DateTimeField(editable=False, default=timezone.now())
     updated_date = models.DateTimeField(editable=False)
+    winner = models.ForeignKey(Player, related_name='winner', null=True)
     
     def save(self):
         self.updated_date = timezone.now()

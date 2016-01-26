@@ -7,6 +7,14 @@
     <div id="bodybox">
         <div id="gamelogbox">
             <h1>{{ game.format }} at {{ game.location }}</h1>
+            <h2>Winner: {{ game.winner }}</h2>
+            Players:
+            <ul>
+            {% for player in game.players.all %}
+                <li>{{ player }} playing</li>
+            {% endfor %}
+            </ul>
+        {{ decks }}
         </div>
     </div>
 </div>

@@ -48,6 +48,13 @@
                         <option value="0">--ADD NEW PLAYER--</option>
                         </select>
 
+                        <div id="deck" style="display: none;">
+                            Deck:<br/>
+                            <select name="ddlDeck" id="ddlDeck">
+                                <option value="-1">--Select Deck--</option>
+                            </select>
+                        </div>
+
                         <div id="addPlayerBox" style="display: none;">
                             First Name:<input type="text" name="player" id="player">
                         </div>
@@ -85,8 +92,33 @@
                 } else {
                     $("#addPlayerBox").hide();
 
+                    $("#ddlDeck").find("option").remove();
+
+                    if ($("#ddlPlayer option:selected").val() <= 0){
+                        $("#deck").hide();
+                        return;
+                    }
+
                     //show deck picker
-                    
+                    $("#deck").show();
+
+                    $.ajax({
+                        url: "get_player_decks/" + $("#ddlPlayer option:selected").val() + "/",
+                        type: "GET",
+                        success: function(data) {
+                            //console.log(data);
+                            $.each(data, function(key, value){
+                                $("#ddlDeck")
+                                        .append($("<option></option>")
+                                        .attr("value", value.id)
+                                        .text(value.format + ": " + value.name));
+                            });
+
+                        },
+                        error: function(data){
+                            console.log("ERROR: " + data);
+                        }
+                    })
                 }
             });
 
